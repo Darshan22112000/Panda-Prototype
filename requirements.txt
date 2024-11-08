@@ -1,0 +1,8 @@
+pandas
+numpy
+selenium
+sqlalchemy
+flask
+webdriver_manager
+playwright
+Flask-Mail

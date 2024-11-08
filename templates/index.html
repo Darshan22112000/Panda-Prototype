@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // Function to display the login message
+        function displayMessage(message) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block'; // Show the message
+        }
+
+        // Function to get the user's browser
+        function getBrowser() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
+                return 'chrome';
+            } else if (userAgent.includes('firefox')) {
+                return 'firefox';
+            } else if (userAgent.includes('edg')) {
+                return 'edge';
+            } else if (userAgent.includes('safari') && !userAgent.includes('chrome')) {
+                return 'safari';
+            } else {
+                return 'other'; // Any unsupported browser
+            }
+        }
+
+        // Function to display the loader
+        function showLoader() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block'; // Show the loader
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'none'; // Hide the loader
+        }
+
+        // Function to handle form submission
+        document.addEventListener('DOMContentLoaded', function () {
+            const browser = getBrowser();
+
+            // Set autocomplete based on browser type
+            const form = document.getElementById('loginForm');
+            if (browser === 'chrome') {
+                // For Chrome
+                form.setAttribute('autocomplete', 'off');
+                // Disable autocomplete for individual select elements
+                const selects = form.querySelectorAll('select');
+                selects.forEach(select => select.setAttribute('autocomplete', 'off'));
+            } else if (browser === 'firefox') {
+                // For Firefox
+                form.setAttribute('autocomplete', 'off');
+                // Disable autocomplete for individual select elements
+                const selects = form.querySelectorAll('select');
+                selects.forEach(select => select.setAttribute('autocomplete', 'off'));
+            } else if (browser === 'edge') {
+                // For Edge
+                form.setAttribute('autocomplete', 'off');
+                // Disable autocomplete for individual select elements
+                const selects = form.querySelectorAll('select');
+                selects.forEach(select => select.setAttribute('autocomplete', 'off'));
+            } else if (browser === 'safari') {
+                // For Safari
+                form.setAttribute('autocomplete', 'off');
+                // Disable autocomplete for individual select elements
+                const selects = form.querySelectorAll('select');
+                selects.forEach(select => select.setAttribute('autocomplete', 'off'));
+            }
+
+            form.onsubmit = async function (event) {
+                event.preventDefault(); // Prevent the default form submission
+                showLoader()
+
+                const formData = new FormData(event.target);
+                const params = new URLSearchParams(formData); // Create URLSearchParams from form data
+
+                try {
+                    const response = await fetch('/login?' + params.toString());
+                    const data = await response.json();
+
+                    hideLoader()
+                    if (response.ok) {
+                        displayMessage(data.message); // Show the message returned from the server
+                    } else {
+                        displayMessage('Error: ' + data.error); // Show error message
+                    }
+                } catch (error) {
+                    hideLoader()
+                    displayMessage('An error occurred: ' + error.message);
+                }
+            };
+        });
+
+
+
+    </script>
+    <style>
+        /* Add your custom CSS here */
+        #message {
+            display: none; /* Hidden by default */
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #4caf50;
+            background-color: #e7f9e9; /* Light green background */
+            color: #4caf50; /* Green text */
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="{{ url_for('static', filename='images/panda-logo.svg') }}"
+             alt="Logo" style="display: block; margin: 10px; max-width: 100%; height: auto;">
+<!--        <h1>Enter Details</h1>-->
+        <form id="loginForm" action="/login" method="GET">
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" required><br>
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="email">Phone No:</label>
+    <input type="phone" id="phone" name="phone"><br>
+
+    <label for="agent">Select Agent:</label>
+    <select id="agent" name="agent">
+        {% for agent in agents %}
+        <option value="{{ agent }}">{{ agent }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="area">Select Area:</label>
+    <select id="area" name="area">
+        {% for area in areas %}
+        <option value="{{ area }}">{{ area }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="plan">Select Plan:</label>
+    <select id="plan" name="plan">
+        {% for plan in plans %}
+        <option value="{{ plan }}">{{ plan }}</option>
+        {% endfor %}
+    </select><br>
+
+    <button type="submit">Send E-Mail</button>
+
+<div class="loader" id="loader" style="display: none;"></div>
+</form>
+
+
+        <!-- Message display -->
+        <div id="message"></div>
+    </div>
+</body>
+</html>
+

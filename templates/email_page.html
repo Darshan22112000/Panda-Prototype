@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='email.css') }}">
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        showLoader(); // Show loader when the page loads
+
+        // Simulate a delay for testing
+        setTimeout(function () {
+            hideLoader(); // Hide loader after 3 seconds
+        }, 4000); // 3000ms = 3 seconds
+    });
+
+    function showLoader() {
+        document.getElementById('loader').style.display = 'block';
+    }
+
+    function hideLoader() {
+        document.getElementById('loader').style.display = 'none';
+    }
+</script>
+
+    <style>
+        /* Add your custom CSS here */
+        #message {
+            display: none; /* Hidden by default */
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #4caf50;
+            background-color: #e7f9e9; /* Light green background */
+            color: #4caf50; /* Green text */
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="{{ url_for('static', filename='images/panda-logo.svg') }}"
+             alt="Logo" style="display: block; margin: 10px; max-width: 100%; height: auto;">
+<!--        <h1>Welcome to Panda!</h1>-->
+        <h3>You're being redirected to Sign Up page, kindly wait.</h3>
+
+    </div>
+</body>
+<div class="loader" id="loader" style="display: none;"></div>
+
+</html>
+
+
+
